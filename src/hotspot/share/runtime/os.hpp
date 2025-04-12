@@ -990,6 +990,8 @@ class os: AllStatic {
   class Aix;
 #elif defined(BSD)
   class Bsd;
+#elif defined(HAIKU)
+  class Haiku;
 #elif defined(LINUX)
   class Linux;
 #elif defined(_WINDOWS)

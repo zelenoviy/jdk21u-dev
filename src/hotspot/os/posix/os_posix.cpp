@@ -206,10 +206,12 @@ extern "C" void breakpoint() {
 }
 
 // Return true if user is running as root.
+#if !defined(HAIKU)
 bool os::have_special_privileges() {
   static bool privileges = (getuid() != geteuid()) || (getgid() != getegid());
   return privileges;
 }
+#endif
 
 void os::wait_for_keypress_at_exit(void) {
   // don't do anything on posix platforms
@@ -285,7 +287,7 @@ bool os::dir_is_empty(const char* path) {
 
 static char* reserve_mmapped_memory(size_t bytes, char* requested_addr) {
   char * addr;
-  int flags = MAP_PRIVATE NOT_AIX( | MAP_NORESERVE ) | MAP_ANONYMOUS;
+  int flags = MAP_PRIVATE NOT_AIX( NOT_HAIKU( | MAP_NORESERVE )) | MAP_ANONYMOUS;
   if (requested_addr != nullptr) {
     assert((uintptr_t)requested_addr % os::vm_page_size() == 0, "Requested address should be aligned to OS page size");
     flags |= MAP_FIXED;
@@ -517,7 +519,7 @@ void os::Posix::print_rlimit_info(outputStream* st) {
   st->print("%d", sysconf(_SC_CHILD_MAX));
 
   print_rlimit(st, ", THREADS", RLIMIT_THREADS);
-#else
+#elif !defined(HAIKU)
   print_rlimit(st, ", NPROC", RLIMIT_NPROC);
 #endif
 

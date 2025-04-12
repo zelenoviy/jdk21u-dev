@@ -42,7 +42,8 @@ m4_include([lib-tests.m4])
 AC_DEFUN_ONCE([LIB_DETERMINE_DEPENDENCIES],
 [
   # Check if X11 is needed
-  if test "x$OPENJDK_TARGET_OS" = xwindows || test "x$OPENJDK_TARGET_OS" = xmacosx; then
+  if test "x$OPENJDK_TARGET_OS" = xwindows || test "x$OPENJDK_TARGET_OS" = xmacosx \
+	|| test "x$OPENJDK_TARGET_OS" = xhaiku; then
     # No X11 support on windows or macosx
     NEEDS_LIB_X11=false
   else
@@ -62,8 +63,8 @@ AC_DEFUN_ONCE([LIB_DETERMINE_DEPENDENCIES],
   fi
 
   # Check if cups is needed
-  if test "x$OPENJDK_TARGET_OS" = xwindows; then
-    # Windows have a separate print system
+  if test "x$OPENJDK_TARGET_OS" = xwindows || test "x$OPENJDK_TARGET_OS" = xhaiku; then
+    # Windows and Haiku have a separate print system
     NEEDS_LIB_CUPS=false
   else
     NEEDS_LIB_CUPS=true
@@ -160,6 +161,10 @@ AC_DEFUN_ONCE([LIB_SETUP_LIBRARIES],
   # perfstat lib
   if test "x$OPENJDK_TARGET_OS" = xaix; then
     BASIC_JVM_LIBS="$BASIC_JVM_LIBS -lperfstat"
+  fi
+
+  if test "x$OPENJDK_TARGET_OS" = xhaiku; then
+    BASIC_JVM_LIBS="$BASIC_JVM_LIBS -lnetwork"
   fi
 
   if test "x$OPENJDK_TARGET_OS" = xwindows; then

@@ -45,6 +45,7 @@ public final class FontUtilities {
 
     public static boolean isMacOSX;
     public static boolean isMacOSX14;
+    public static boolean isHaiku;    
 
     public static boolean useJDKScaler;
 
@@ -69,6 +70,9 @@ public final class FontUtilities {
                 isLinux = OSInfo.getOSType() == OSInfo.OSType.LINUX;
 
                 isMacOSX = OSInfo.getOSType() == OSInfo.OSType.MACOSX;
+                
+                isHaiku = OSInfo.getOSType() == OSInfo.OSType.HAIKU;
+                                
                 if (isMacOSX) {
                     // os.version has values like 10.13.6, 10.14.6
                     // If it is not positively recognised as 10.13 or less,

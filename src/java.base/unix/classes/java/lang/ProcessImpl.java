@@ -112,6 +112,8 @@ final class ProcessImpl extends Process {
                         return lm; // All but VFORK are valid
                     }
                     break;
+                case HAIKU:
+                    return lm;
                 case WINDOWS:
                     // fall through to throw to Error
             }
@@ -329,6 +331,7 @@ final class ProcessImpl extends Process {
         switch (OperatingSystem.current()) {
             case LINUX:
             case MACOS:
+            case HAIKU:
                 stdin = (fds[0] == -1) ?
                         ProcessBuilder.NullOutputStream.INSTANCE :
                         new ProcessPipeOutputStream(fds[0]);
@@ -462,6 +465,7 @@ final class ProcessImpl extends Process {
             case LINUX:
             case MACOS:
             case AIX:
+            case HAIKU:
                 // There is a risk that pid will be recycled, causing us to
                 // kill the wrong process!  So we only terminate processes
                 // that appear to still be running.  Even with this check,

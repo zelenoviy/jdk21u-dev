@@ -28,7 +28,7 @@
 #include <sys/stat.h>
 #include <sys/statvfs.h>
 
-#if defined(_ALLBSD_SOURCE)
+#if defined(_ALLBSD_SOURCE) || defined(HAIKU)
 #define lseek64 lseek
 #define stat64 stat
 #define flock64 flock

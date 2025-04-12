@@ -157,6 +157,14 @@ class oopDesc;
 #endif
 #define UINTX_FORMAT_W(width)    "%"   #width PRIuPTR
 
+#ifdef HAIKU
+#include <SupportDefs.h>
+#define OSTHREADID_FORMAT     "%" B_PRIx32
+#define OSTHREADID_FORMAT2    "%2" B_PRId32
+#define OSTHREADID_FORMAT_HEX "%" B_PRIx32
+#define OSTHREADID_FORMAT_HEX2 "%2" B_PRIx32
+#endif
+
 // Format jlong, if necessary
 #ifndef JLONG_FORMAT
 #define JLONG_FORMAT             INT64_FORMAT
